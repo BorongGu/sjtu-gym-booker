@@ -1,0 +1,8 @@
+node_modules/
+.profile/
+.state.json
+logs/
+
+# 工具目录：.codegraph 是指向 ~/.omo/codegraph 的 junction，不排除会被 git 顺着抓进来
+.codegraph/
+.omo/

@@ -1,0 +1,11 @@
+{
+  "name": "sjtu-gym-booker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node booker.js",
+    "test": "node pick.test.js",
+    "verify": "node verify.js"
+  }
+}
