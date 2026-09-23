@@ -1,6 +1,6 @@
 // 跡测选位逻辑（纯函数，不联网）。造一个假矩阵覆盖各种情况。
 const B = require('./booker.js');
-const { CFG, PERIODS, slotCapFor, parseSlots, availableCells, pickPreferred, pickFallback, renderMatrix, buildSpaces } = B;
+const { CFG, applyCliArgs, PERIODS, slotCapFor, parseSlots, availableCells, pickPreferred, pickFallback, renderMatrix, buildSpaces } = B;
 
 let fail = 0;
 const eq = (name, got, want) => {
@@ -149,6 +149,10 @@ CFG.fields = [];
   eq('写死日期不受影响', resolveTargetDate(() => noon), '2026-10-01');
   CFG.targetDate = old;
 }
+
+// —— 命令行 --now 覆盖 fireAt ——
+eq('--now 覆盖 fireAt', applyCliArgs({ fireAt: '12:00:00' }, ['--now']).fireAt, 'now');
+eq('无参数不改 fireAt', applyCliArgs({ fireAt: '12:00:00' }, []).fireAt, '12:00:00');
 
 console.log('\n--- 矩阵渲染 ---');
 console.log(renderMatrix(fields));

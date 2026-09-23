@@ -14,6 +14,13 @@ const path = require('path');
 const fs = require('fs');
 
 const CFG = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), 'utf8'));
+
+/** 命令行覆盖配置：--now 立即开抢，无视 config.fireAt（免得临时测试还要改文件再改回来） */
+function applyCliArgs(cfg, argv) {
+  if (argv.includes('--now')) cfg.fireAt = 'now';
+  return cfg;
+}
+applyCliArgs(CFG, process.argv.slice(2));
 const ORIGIN = 'https://sports.sjtu.edu.cn';
 const SSO = 'https://jaccount.sjtu.edu.cn/oauth2/authorize?response_type=code&client_id=mB5nKHqC00MusWAgnqSF&redirect_uri=' + ORIGIN + '/oauth2Login';
 
@@ -546,6 +553,7 @@ function buildSpaces(picks) {
 async function main() {
   initLog(CFG.keepLogs);
   log(`日志同时写入 logs/${logFile}`);
+  if (process.argv.includes('--now')) log('--now：忽略 config.fireAt，立即开抢');
 
   const ctx = await chromium.launchPersistentContext(PROFILE_DIR, {
     channel: 'msedge',
@@ -1007,4 +1015,4 @@ async function main() {
 if (require.main === module) main();
 
 // 供测试用：这些都是纯函数，不碰网络
-module.exports = { CFG, PERIODS, slotCapFor, parseSlots, availableCells, pickPreferred, pickFallback, renderMatrix, buildSpaces, api, classify, syncClock, resolveTargetDate, openInApp };
+module.exports = { CFG, applyCliArgs, PERIODS, slotCapFor, parseSlots, availableCells, pickPreferred, pickFallback, renderMatrix, buildSpaces, api, classify, syncClock, resolveTargetDate, openInApp };

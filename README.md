@@ -35,7 +35,7 @@ jaccount 会话过期时会自动重新走一次 SSO，通常无感；只有 jac
 | `fallback` | 心仪没抢到时的兜底策略：`nearest`(默认) / `later` / `off` |
 | `maxSlotsPerOrder` | 单次最多订几个时段；`0` = 按场馆紧张度自动推定 |
 | `fields` | 限定子场地名；`[]` = 任意 |
-| `fireAt` | 每日开放时刻，`"now"` = 立即跑一次 |
+| `fireAt` | 每日开放时刻，`"now"` = 立即跑一次；也可 `node booker.js --now` 临时覆盖 |
 | `preOpenLeadMs` | 提前多少毫秒开始轻探，默认 1500 |
 | `earlyRetryMs` | 日期还没放出来时的重探间隔，默认 150（决定命中开放瞬间的精度） |
 | `attemptIntervalMs` | 日期已开放但没抢到时的重试间隔，默认 800 |
